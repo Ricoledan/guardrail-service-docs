@@ -1,0 +1,6 @@
+* xref:index.adoc[API Reference Overview]
+* xref:authentication.adoc[Authentication]
+* xref:endpoints.adoc[API Endpoints]
+* xref:schemas.adoc[Data Schemas]
+* xref:examples.adoc[Examples]
+* xref:errors.adoc[Error Handling]

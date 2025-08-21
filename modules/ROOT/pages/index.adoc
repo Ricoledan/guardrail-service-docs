@@ -1,0 +1,37 @@
+= Guardrail Service Documentation
+:description: Complete documentation for the Guardrail Service
+:keywords: guardrail, service, documentation
+
+Welcome to the Guardrail Service documentation. This site provides comprehensive guides, API references, and administrative documentation for the Guardrail Service ecosystem.
+
+== Quick Links
+
+* xref:getting-started.adoc[Get started with Guardrail Service]
+* xref:user-guide:index.adoc[User Guide]
+* xref:api:index.adoc[API Reference]
+* xref:admin:index.adoc[Administration Guide]
+* xref:developer:index.adoc[Developer Documentation]
+
+== Documentation Structure
+
+This documentation is organized into the following sections:
+
+[cols="1,2"]
+|===
+|Section |Description
+
+|ROOT
+|Core documentation including getting started, architecture, and concepts
+
+|User Guide
+|End-user documentation for using the Guardrail Service
+
+|API Reference
+|Complete API documentation including endpoints, authentication, and examples
+
+|Admin Guide
+|Installation, configuration, and maintenance procedures
+
+|Developer Guide
+|Contributing guidelines, building from source, and extending the service
+|===

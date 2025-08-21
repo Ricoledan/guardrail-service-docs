@@ -1,0 +1,187 @@
+= API Reference
+:description: Complete API reference for Guardrail Service
+:keywords: API, REST, endpoints, reference
+
+This section provides comprehensive documentation for the Guardrail Service API.
+
+== Overview
+
+The Guardrail Service API is a RESTful interface that allows programmatic access to all service functionality.
+
+=== Base URL
+
+[source]
+----
+https://api.guardrail.example.com/v1
+----
+
+=== API Versioning
+
+The API uses URL-based versioning. The current version is `v1`.
+
+== Quick Start
+
+=== Authentication
+
+All API requests require authentication. See xref:authentication.adoc[Authentication] for details.
+
+[source,bash]
+----
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.guardrail.example.com/v1/policies
+----
+
+=== Response Format
+
+All responses are returned in JSON format:
+
+[source,json]
+----
+{
+  "status": "success",
+  "data": {
+    // Response data
+  },
+  "meta": {
+    "timestamp": "2024-01-15T10:30:00Z",
+    "version": "v1"
+  }
+}
+----
+
+== Core Resources
+
+=== Policies
+
+* `GET /policies` - List all policies
+* `GET /policies/{id}` - Get a specific policy
+* `POST /policies` - Create a new policy
+* `PUT /policies/{id}` - Update a policy
+* `DELETE /policies/{id}` - Delete a policy
+
+=== Rules
+
+* `GET /rules` - List all rules
+* `GET /rules/{id}` - Get a specific rule
+* `POST /rules` - Create a new rule
+* `PUT /rules/{id}` - Update a rule
+* `DELETE /rules/{id}` - Delete a rule
+
+=== Validations
+
+* `POST /validate` - Validate a request against policies
+* `POST /test` - Test policies without enforcement
+
+== Rate Limiting
+
+The API implements rate limiting to ensure fair usage:
+
+* **Default limit**: 1000 requests per hour
+* **Burst limit**: 100 requests per minute
+* **Headers**: Rate limit information is included in response headers
+
+[source]
+----
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 999
+X-RateLimit-Reset: 1642248000
+----
+
+== Pagination
+
+List endpoints support pagination:
+
+[source]
+----
+GET /policies?page=2&limit=50
+----
+
+Parameters:
+* `page` - Page number (default: 1)
+* `limit` - Items per page (default: 20, max: 100)
+
+Response includes pagination metadata:
+
+[source,json]
+----
+{
+  "data": [...],
+  "meta": {
+    "pagination": {
+      "page": 2,
+      "limit": 50,
+      "total": 245,
+      "pages": 5
+    }
+  }
+}
+----
+
+== Filtering and Sorting
+
+=== Filtering
+
+Use query parameters to filter results:
+
+[source]
+----
+GET /policies?status=active&type=security
+----
+
+=== Sorting
+
+Use the `sort` parameter:
+
+[source]
+----
+GET /policies?sort=created_at:desc
+----
+
+== Webhooks
+
+Configure webhooks for real-time notifications:
+
+[source,json]
+----
+{
+  "url": "https://your-server.com/webhook",
+  "events": ["policy.created", "policy.updated"],
+  "secret": "your-webhook-secret"
+}
+----
+
+== SDK Support
+
+Official SDKs are available for:
+
+* JavaScript/TypeScript
+* Python
+* Go
+* Java
+* Ruby
+
+Example using the JavaScript SDK:
+
+[source,javascript]
+----
+import { GuardrailClient } from '@guardrail/sdk';
+
+const client = new GuardrailClient({
+  apiKey: 'YOUR_API_KEY'
+});
+
+const policies = await client.policies.list();
+----
+
+== API Explorer
+
+Use our interactive API explorer to test endpoints:
+
+https://api.guardrail.example.com/explorer
+
+== Support
+
+* xref:authentication.adoc[Authentication Guide]
+* xref:endpoints.adoc[Complete Endpoint Reference]
+* xref:errors.adoc[Error Handling]
+* xref:examples.adoc[Code Examples]

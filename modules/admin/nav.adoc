@@ -1,0 +1,7 @@
+* xref:index.adoc[Administration Overview]
+* xref:installation.adoc[Installation Guide]
+* xref:configuration.adoc[Configuration]
+* xref:backup-restore.adoc[Backup and Restore]
+* xref:monitoring.adoc[Monitoring Setup]
+* xref:security.adoc[Security Best Practices]
+* xref:upgrades.adoc[Upgrade Procedures]

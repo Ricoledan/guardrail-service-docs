@@ -1,0 +1,61 @@
+{
+  "name": "guardrail-service-docs",
+  "version": "1.0.0",
+  "description": "Guardrail Service Documentation - Built with Antora",
+  "private": true,
+  "scripts": {
+    "build": "antora --fetch antora-playbook.yml",
+    "build:local": "antora --fetch local-antora-playbook.yml",
+    "preview": "antora --fetch local-antora-playbook.yml && npx http-server build -o",
+    "preview:prod": "antora --fetch antora-playbook.yml && npx http-server public -o",
+    "validate": "antora --fetch --generator @antora/xref-validator local-antora-playbook.yml",
+    "serve": "npx http-server build -p 8080",
+    "serve:prod": "npx http-server public -p 8080",
+    "clean": "rm -rf build public .cache .antora-cache",
+    "watch": "nodemon --watch modules --watch '*.yml' --ext adoc,yml --exec 'npm run build:local'",
+    "lint": "npm run lint:adoc && npm run lint:yaml",
+    "lint:adoc": "find modules -name '*.adoc' -exec asciidoctor --safe-mode=safe --failure-level=WARNING -o /dev/null {} \\;",
+    "lint:yaml": "prettier --check '**/*.{yml,yaml}'",
+    "format": "prettier --write '**/*.{json,yml,yaml,md}'",
+    "test": "npm run validate && npm run lint",
+    "check-links": "npm run build:local && npx http-server build -p 8080 & sleep 3 && npx broken-link-checker http://localhost:8080 --recursive --exclude-external; kill %1",
+    "postinstall": "echo 'Dependencies installed successfully. Run npm run build:local to build the documentation.'",
+    "dev": "npm run build:local && npm run serve",
+    "ci": "npm run clean && npm ci && npm run test && npm run build:prod"
+  },
+  "keywords": [
+    "documentation",
+    "antora",
+    "asciidoc",
+    "guardrail",
+    "service"
+  ],
+  "author": "Guardrail Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/yourorg/guardrail-service/guardrail-service-docs.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/yourorg/guardrail-service/guardrail-service-docs/issues"
+  },
+  "homepage": "https://yourorg.gitlab.io/guardrail-service/guardrail-service-docs",
+  "devDependencies": {
+    "@antora/cli": "^3.1.7",
+    "@antora/site-generator": "^3.1.7",
+    "@antora/xref-validator": "^1.0.0-alpha.2",
+    "broken-link-checker": "^0.7.8",
+    "http-server": "^14.1.1",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "optionalDependencies": {
+    "@antora/lunr-extension": "^1.0.0-alpha.8",
+    "@antora/pdf-extension": "^1.0.0-alpha.7",
+    "asciidoctor-kroki": "^0.18.1"
+  }
+}

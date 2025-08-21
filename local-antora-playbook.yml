@@ -1,0 +1,30 @@
+site:
+  title: Guardrail Service Documentation (Local)
+  url: http://localhost:8080
+  start_page: guardrail-service::index.adoc
+
+content:
+  sources:
+  - url: .
+    branches: HEAD
+    start_path: .
+
+runtime:
+  fetch: true
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: ./supplemental-ui
+
+output:
+  dir: ./build
+  clean: true
+
+asciidoc:
+  attributes:
+    page-pagination: true
+    sectanchors: true
+    sectlinks: true
+    experimental: true

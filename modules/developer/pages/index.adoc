@@ -1,0 +1,344 @@
+= Developer Documentation
+:description: Developer guide for extending and contributing to Guardrail Service
+:keywords: developer, development, contributing, plugins
+
+Welcome to the Guardrail Service Developer Documentation. This guide is for developers who want to contribute to the project or extend its functionality.
+
+== Overview
+
+The developer documentation covers:
+
+* Building the service from source
+* Contributing to the project
+* Developing plugins and extensions
+* Testing and quality assurance
+* API client development
+
+== Getting Started
+
+=== Development Environment
+
+Set up your development environment:
+
+[source,bash]
+----
+# Clone the repository
+git clone https://github.com/guardrail/guardrail-service.git
+cd guardrail-service
+
+# Install dependencies
+make deps
+
+# Build the project
+make build
+
+# Run tests
+make test
+----
+
+=== Project Structure
+
+[source]
+----
+guardrail-service/
+├── cmd/              # Command-line interfaces
+├── pkg/              # Public packages
+├── internal/         # Private packages
+├── api/              # API definitions
+├── web/              # Web UI assets
+├── scripts/          # Build and deployment scripts
+├── tests/            # Test suites
+└── docs/             # Documentation
+----
+
+== Development Workflow
+
+=== Local Development
+
+. Fork the repository
+. Create a feature branch
+. Make your changes
+. Write tests
+. Submit a pull request
+
+=== Code Style
+
+Follow the project's coding standards:
+
+* Use the provided linters
+* Follow language-specific conventions
+* Write clear, documented code
+* Include unit tests
+
+=== Testing
+
+Run the test suite:
+
+[source,bash]
+----
+# Unit tests
+make test-unit
+
+# Integration tests
+make test-integration
+
+# End-to-end tests
+make test-e2e
+
+# All tests
+make test-all
+----
+
+== Architecture Overview
+
+=== Core Components
+
+The service is built with a modular architecture:
+
+* **Core Engine**: Policy evaluation logic
+* **API Layer**: RESTful API and GraphQL endpoints
+* **Storage Layer**: Database and cache abstractions
+* **Plugin System**: Extensibility framework
+
+=== Technology Stack
+
+* **Language**: Go 1.21+
+* **Database**: PostgreSQL, MySQL, MongoDB
+* **Cache**: Redis, Memcached
+* **Message Queue**: RabbitMQ, Kafka
+* **Container**: Docker, Kubernetes
+
+== Plugin Development
+
+=== Plugin Interface
+
+Create custom plugins by implementing the plugin interface:
+
+[source,go]
+----
+package plugin
+
+type Plugin interface {
+    Name() string
+    Version() string
+    Init(config Config) error
+    Execute(context Context) (Result, error)
+    Shutdown() error
+}
+----
+
+=== Plugin Example
+
+[source,go]
+----
+package myplugin
+
+import "github.com/guardrail/plugin"
+
+type MyPlugin struct {
+    config Config
+}
+
+func (p *MyPlugin) Name() string {
+    return "my-custom-plugin"
+}
+
+func (p *MyPlugin) Execute(ctx Context) (Result, error) {
+    // Plugin logic here
+    return Result{
+        Status: "success",
+        Data:   processedData,
+    }, nil
+}
+----
+
+=== Plugin Registration
+
+Register your plugin:
+
+[source,go]
+----
+import "github.com/guardrail/registry"
+
+func init() {
+    registry.Register(&MyPlugin{})
+}
+----
+
+== API Client Development
+
+=== SDK Guidelines
+
+When developing API clients:
+
+* Follow language conventions
+* Implement all endpoints
+* Include comprehensive error handling
+* Provide clear documentation
+* Include examples
+
+=== Example Client
+
+Python client example:
+
+[source,python]
+----
+import guardrail
+
+client = guardrail.Client(
+    api_key="your-api-key",
+    base_url="https://api.guardrail.example.com"
+)
+
+# List policies
+policies = client.policies.list()
+
+# Create a policy
+policy = client.policies.create({
+    "name": "my-policy",
+    "rules": [...],
+    "actions": [...]
+})
+
+# Validate a request
+result = client.validate({
+    "method": "POST",
+    "path": "/api/endpoint",
+    "body": {...}
+})
+----
+
+== Contributing
+
+=== Contribution Process
+
+. Check existing issues and discussions
+. Open an issue for significant changes
+. Fork and create a feature branch
+. Write code and tests
+. Update documentation
+. Submit a pull request
+
+=== Code Review
+
+All contributions go through code review:
+
+* Automated checks must pass
+* At least one maintainer approval required
+* Address feedback promptly
+* Keep changes focused
+
+=== Documentation
+
+Update documentation for your changes:
+
+* API documentation for new endpoints
+* User guide for new features
+* Developer docs for architectural changes
+
+== Testing Strategy
+
+=== Unit Testing
+
+Write unit tests for all functions:
+
+[source,go]
+----
+func TestPolicyEvaluation(t *testing.T) {
+    policy := NewPolicy("test-policy")
+    result := policy.Evaluate(context)
+    
+    assert.Equal(t, "allow", result.Decision)
+    assert.NotNil(t, result.Metadata)
+}
+----
+
+=== Integration Testing
+
+Test component interactions:
+
+[source,go]
+----
+func TestAPIIntegration(t *testing.T) {
+    server := StartTestServer()
+    defer server.Close()
+    
+    response := server.Request("POST", "/policies", policy)
+    assert.Equal(t, 201, response.StatusCode)
+}
+----
+
+=== Performance Testing
+
+Benchmark critical paths:
+
+[source,go]
+----
+func BenchmarkPolicyEvaluation(b *testing.B) {
+    policy := LoadComplexPolicy()
+    
+    b.ResetTimer()
+    for i := 0; i < b.N; i++ {
+        policy.Evaluate(context)
+    }
+}
+----
+
+== Debugging
+
+=== Debug Mode
+
+Enable debug mode for detailed logging:
+
+[source,bash]
+----
+export GUARDRAIL_DEBUG=true
+export GUARDRAIL_LOG_LEVEL=debug
+----
+
+=== Profiling
+
+Use built-in profiling tools:
+
+[source,bash]
+----
+# CPU profiling
+go tool pprof http://localhost:6060/debug/pprof/profile
+
+# Memory profiling
+go tool pprof http://localhost:6060/debug/pprof/heap
+----
+
+== Release Process
+
+=== Version Management
+
+We follow semantic versioning:
+
+* MAJOR: Breaking changes
+* MINOR: New features
+* PATCH: Bug fixes
+
+=== Release Checklist
+
+. Update version numbers
+. Update changelog
+. Run full test suite
+. Build release artifacts
+. Create release notes
+. Tag the release
+. Deploy documentation
+
+== Resources
+
+* xref:contributing.adoc[Contributing Guide]
+* xref:building.adoc[Building from Source]
+* xref:architecture.adoc[Technical Architecture]
+* xref:plugins.adoc[Plugin Development]
+* xref:testing.adoc[Testing Guide]
+
+== Support
+
+* GitHub Issues: https://github.com/guardrail/guardrail-service/issues
+* Discord: https://discord.gg/guardrail
+* Mailing List: dev@guardrail.example.com

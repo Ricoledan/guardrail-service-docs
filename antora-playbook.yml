@@ -1,0 +1,27 @@
+site:
+  title: Guardrail Service Documentation
+  url: https://yourorg.gitlab.io/guardrail-service/guardrail-service-docs
+  start_page: guardrail-service::index.adoc
+
+content:
+  sources:
+  - url: .
+    branches: [main, v1.x, v2.x]
+    start_path: .
+  # Optional: Pull docs from code repos
+  # - url: https://gitlab.com/yourorg/guardrail-service/guardrail-api.git
+  #   branches: [main]
+  #   start_path: docs
+
+runtime:
+  fetch: true
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: ./supplemental-ui
+
+output:
+  dir: ./public
+  clean: true

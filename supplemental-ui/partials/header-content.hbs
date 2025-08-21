@@ -1,0 +1,64 @@
+{{!-- Custom header content for Guardrail Service Documentation --}}
+<div class="navbar-brand">
+  <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}">
+    <span class="brand-title">{{site.title}}</span>
+  </a>
+  <div class="navbar-item brand-version">
+    <span class="version-label">Version: </span>
+    <span class="version-number">{{page.displayVersion}}</span>
+  </div>
+</div>
+
+{{!-- Additional navigation items --}}
+<div class="navbar-end">
+  <a class="navbar-item" href="https://github.com/guardrail/guardrail-service" target="_blank" rel="noopener">
+    <span class="icon">
+      <svg class="svg-icon" style="width: 1em; height: 1em;">
+        <use xlink:href="#icon-github"></use>
+      </svg>
+    </span>
+    <span>GitHub</span>
+  </a>
+  <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}/guardrail-service::api:index.adoc">
+    API Docs
+  </a>
+  <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}/guardrail-service::user-guide:index.adoc">
+    User Guide
+  </a>
+</div>
+
+{{!-- Custom styles for header --}}
+<style>
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .brand-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .brand-version {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  .version-label {
+    opacity: 0.7;
+  }
+  
+  .version-number {
+    font-weight: 600;
+  }
+  
+  .navbar-end {
+    margin-left: auto;
+  }
+</style>

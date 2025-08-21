@@ -1,0 +1,325 @@
+= Guardrail Service Documentation Repository
+:toc: left
+:toclevels: 3
+:icons: font
+:source-highlighter: highlight.js
+
+This repository contains the Antora documentation component for the Guardrail Service.
+
+== Quick Start
+
+=== Prerequisites
+
+* Node.js 18+ and npm 8+
+* Git
+* (Optional) Nix with flakes enabled for reproducible development environment
+
+=== Local Development
+
+==== Option 1: Using Nix (Recommended)
+
+[source,bash]
+----
+# Enter the Nix development environment
+nix develop
+
+# Install Node dependencies
+npm ci
+
+# Build documentation locally
+npm run build:local
+
+# Preview documentation
+npm run preview
+----
+
+==== Option 2: Using Node.js directly
+
+[source,bash]
+----
+# Install dependencies
+npm ci
+
+# Build documentation locally
+npm run build:local
+
+# Preview documentation
+npm run preview
+----
+
+The documentation will be available at http://localhost:8080
+
+=== Testing as an Antora Component
+
+This repository is designed to be consumed by other Antora documentation sites. To test locally:
+
+[source,bash]
+----
+npx antora local-antora-playbook.yml
+npx http-server build
+----
+
+== Repository Structure
+
+This follows the standard Antora component structure:
+
+[source,tree]
+----
+guardrail-service-docs/
+├── antora.yml                    # Component descriptor
+├── antora-playbook.yml          # Production build configuration
+├── local-antora-playbook.yml    # Local testing configuration
+├── modules/                      # Documentation modules
+│   ├── ROOT/                    # Main documentation module
+│   │   ├── nav.adoc            # Navigation for ROOT module
+│   │   ├── pages/              # Documentation pages
+│   │   ├── images/             # Images and diagrams
+│   │   ├── examples/           # Code examples
+│   │   └── attachments/        # Downloadable files
+│   ├── user-guide/             # User guide module
+│   ├── api/                    # API documentation module
+│   ├── admin/                  # Administration guide module
+│   └── developer/              # Developer documentation module
+├── supplemental-ui/             # UI customizations
+├── flake.nix                   # Nix flake for dev environment
+├── package.json                # Node.js dependencies and scripts
+└── Makefile                    # Convenience commands
+----
+
+== Available Commands
+
+=== npm Scripts
+
+[cols="2,3"]
+|===
+|Command |Description
+
+|`npm run build:local`
+|Build documentation for local testing
+
+|`npm run build`
+|Build documentation for production
+
+|`npm run preview`
+|Build and preview documentation locally
+
+|`npm run serve`
+|Serve already built documentation
+
+|`npm run validate`
+|Validate cross-references and structure
+
+|`npm run watch`
+|Watch for changes and rebuild automatically
+
+|`npm run lint`
+|Lint AsciiDoc and YAML files
+
+|`npm run format`
+|Format JSON, YAML, and Markdown files
+
+|`npm run test`
+|Run validation and linting
+
+|`npm run clean`
+|Remove build artifacts
+|===
+
+=== Make Commands
+
+Run `make help` to see all available make commands:
+
+[source,bash]
+----
+make help         # Show help message
+make dev          # One-stop development setup
+make build-local  # Build documentation locally
+make preview      # Build and preview documentation
+make validate     # Validate documentation structure
+make clean        # Clean build artifacts
+----
+
+== Content Guidelines
+
+=== Writing Documentation
+
+* All documentation must be in AsciiDoc format (`.adoc` files)
+* Follow Antora page and navigation conventions
+* Use proper cross-references: `xref:module:page.adoc[Link Text]`
+* Place images in the module's `images/` directory
+* Include appropriate metadata and attributes
+
+=== Page Structure
+
+Every page should include:
+
+[source,asciidoc]
+----
+= Page Title
+:description: Brief description of the page
+:keywords: comma, separated, keywords
+
+Page content starts here...
+----
+
+=== Cross-References
+
+* Within same module: `xref:page.adoc[Link Text]`
+* To another module: `xref:module:page.adoc[Link Text]`
+* To specific section: `xref:page.adoc#section-id[Link Text]`
+
+=== Adding Images
+
+[source,asciidoc]
+----
+image::image-name.png[Alt text]
+
+// For diagrams
+[plantuml, diagram-name, svg]
+----
+@startuml
+...
+@enduml
+----
+----
+
+== Version Management
+
+=== Branch Strategy
+
+* `main` - Latest development version
+* `v1.x` - Version 1.x maintenance branch
+* `v2.x` - Version 2.x maintenance branch
+
+=== Version Configuration
+
+Component version is defined in `antora.yml`:
+
+[source,yaml]
+----
+version: ~           # Uses branch name as version
+display_version: Latest  # Display name in UI
+----
+
+== Testing
+
+=== Local Testing
+
+Test the documentation locally before pushing:
+
+[source,bash]
+----
+# Validate structure
+npm run validate
+
+# Check for broken links
+npm run check-links
+
+# Lint content
+npm run lint
+----
+
+=== CI/CD Pipeline
+
+The GitLab CI pipeline automatically:
+
+. Validates documentation structure
+. Checks for broken links
+. Builds documentation
+. Deploys to GitLab Pages (main branch only)
+
+== Integration with Other Sites
+
+This component can be consumed by other Antora documentation sites. Add to their playbook:
+
+[source,yaml]
+----
+content:
+  sources:
+  - url: https://gitlab.com/yourorg/guardrail-service/guardrail-service-docs.git
+    branches: [main, v1.x, v2.x]
+    start_path: .
+----
+
+== Customization
+
+=== UI Customizations
+
+Place custom UI files in `supplemental-ui/`:
+
+* `supplemental-ui/partials/header-content.hbs` - Custom header
+* `supplemental-ui/partials/footer-content.hbs` - Custom footer
+* `supplemental-ui/css/custom.css` - Custom styles
+
+=== Build Customization
+
+Modify playbooks to customize the build:
+
+* `local-antora-playbook.yml` - Local build settings
+* `antora-playbook.yml` - Production build settings
+
+== Troubleshooting
+
+=== Common Issues
+
+[cols="1,2"]
+|===
+|Issue |Solution
+
+|`node_modules` not found
+|Run `npm ci` to install dependencies
+
+|Build fails with "xref not found"
+|Check cross-references with `npm run validate`
+
+|Changes not showing in preview
+|Clear cache with `npm run clean` then rebuild
+
+|Nix shell not loading
+|Ensure direnv is allowed: `direnv allow`
+
+|Port 8080 already in use
+|Change port in package.json or use different command
+|===
+
+=== Debug Mode
+
+Enable verbose output for debugging:
+
+[source,bash]
+----
+ANTORA_LOG_LEVEL=debug npm run build:local
+----
+
+== Contributing
+
+=== Contribution Guidelines
+
+. Fork the repository
+. Create a feature branch
+. Make your changes
+. Validate your changes: `npm run test`
+. Submit a merge request
+
+=== Style Guide
+
+* Use sentence case for headings
+* Keep paragraphs concise
+* Include examples where appropriate
+* Add cross-references to related topics
+
+== Support
+
+* Issue Tracker: https://gitlab.com/yourorg/guardrail-service/guardrail-service-docs/issues
+* Documentation: https://yourorg.gitlab.io/guardrail-service/guardrail-service-docs
+* Main Project: https://gitlab.com/yourorg/guardrail-service
+
+== License
+
+This documentation is licensed under the MIT License. See LICENSE file for details.
+
+== Resources
+
+* https://docs.antora.org[Antora Documentation]
+* https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[AsciiDoc Syntax Reference]
+* https://gitlab.com/antora/antora[Antora on GitLab]

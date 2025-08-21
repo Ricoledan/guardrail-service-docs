@@ -1,0 +1,131 @@
+= User Guide
+:description: Comprehensive user guide for Guardrail Service
+:keywords: user guide, documentation, how-to
+
+Welcome to the Guardrail Service User Guide. This guide provides detailed information on using the Guardrail Service effectively.
+
+== Overview
+
+The Guardrail Service User Guide covers:
+
+* Creating and managing policies
+* Defining validation rules
+* Monitoring service activity
+* Troubleshooting common issues
+
+== Getting Started
+
+If you're new to Guardrail Service, we recommend:
+
+. xref:ROOT:getting-started.adoc[Complete the Getting Started guide]
+. Review the xref:policies.adoc[policy documentation]
+. Try creating your first xref:rules.adoc[validation rule]
+
+== Key Concepts
+
+=== Policies
+
+Policies define the rules and constraints that the Guardrail Service enforces. They can be:
+
+* **Allow policies**: Explicitly permit certain actions
+* **Deny policies**: Block specific behaviors
+* **Conditional policies**: Apply rules based on context
+
+=== Rules
+
+Rules are the building blocks of policies:
+
+* Pattern matching rules
+* Value validation rules
+* Custom logic rules
+
+=== Actions
+
+Actions determine what happens when a policy is triggered:
+
+* Block the request
+* Log the event
+* Send an alert
+* Transform the request
+
+== Common Use Cases
+
+=== API Security
+
+Protect your APIs by:
+
+* Validating request formats
+* Enforcing rate limits
+* Blocking malicious patterns
+
+=== Data Validation
+
+Ensure data quality by:
+
+* Checking field formats
+* Validating value ranges
+* Enforcing business rules
+
+=== Compliance Enforcement
+
+Meet regulatory requirements by:
+
+* Logging all access attempts
+* Enforcing data residency rules
+* Applying privacy filters
+
+== Best Practices
+
+. **Start Simple**: Begin with basic policies and gradually add complexity
+. **Test Thoroughly**: Use the testing environment before production deployment
+. **Monitor Actively**: Set up alerts for policy violations
+. **Document Policies**: Maintain clear documentation of your policy intent
+. **Review Regularly**: Periodically audit and update your policies
+
+== User Interface
+
+The Guardrail Service provides multiple interfaces:
+
+=== Web Console
+
+Access the web console at `http://your-guardrail-instance:8080`
+
+Features include:
+
+* Visual policy editor
+* Real-time monitoring dashboard
+* Testing sandbox
+* Configuration management
+
+=== Command Line Interface
+
+For automation and scripting:
+
+[source,bash]
+----
+guardrail policy list
+guardrail policy create --file policy.yaml
+guardrail test --request sample.json
+----
+
+=== API Access
+
+Programmatic access via REST API:
+
+[source,bash]
+----
+curl -X GET http://your-instance/api/v1/policies \
+  -H "Authorization: Bearer $TOKEN"
+----
+
+== Support Resources
+
+* xref:troubleshooting.adoc[Troubleshooting Guide]
+* xref:api:index.adoc[API Documentation]
+* xref:admin:index.adoc[Administrator Guide]
+
+== Next Steps
+
+* xref:policies.adoc[Learn about policies in detail]
+* xref:rules.adoc[Create your first custom rule]
+* xref:monitoring.adoc[Set up monitoring and alerts]

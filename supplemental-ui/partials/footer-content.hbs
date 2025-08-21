@@ -1,0 +1,152 @@
+{{!-- Custom footer content for Guardrail Service Documentation --}}
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>Documentation</h4>
+      <ul>
+        <li><a href="{{or site.url (or siteRootUrl siteRootPath)}}/guardrail-service::index.adoc">Getting Started</a></li>
+        <li><a href="{{or site.url (or siteRootUrl siteRootPath)}}/guardrail-service::user-guide:index.adoc">User Guide</a></li>
+        <li><a href="{{or site.url (or siteRootUrl siteRootPath)}}/guardrail-service::api:index.adoc">API Reference</a></li>
+        <li><a href="{{or site.url (or siteRootUrl siteRootPath)}}/guardrail-service::admin:index.adoc">Admin Guide</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Community</h4>
+      <ul>
+        <li><a href="https://github.com/guardrail/guardrail-service" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://discord.gg/guardrail" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="https://guardrail.example.com/blog" target="_blank" rel="noopener">Blog</a></li>
+        <li><a href="https://guardrail.example.com/community" target="_blank" rel="noopener">Forums</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="{{or site.url (or siteRootUrl siteRootPath)}}/guardrail-service::developer:index.adoc">Developer Docs</a></li>
+        <li><a href="https://status.guardrail.example.com" target="_blank" rel="noopener">Service Status</a></li>
+        <li><a href="https://guardrail.example.com/security" target="_blank" rel="noopener">Security</a></li>
+        <li><a href="https://guardrail.example.com/support" target="_blank" rel="noopener">Support</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="https://guardrail.example.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></li>
+        <li><a href="https://guardrail.example.com/terms" target="_blank" rel="noopener">Terms of Service</a></li>
+        <li><a href="https://guardrail.example.com/license" target="_blank" rel="noopener">License</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p class="copyright">
+      © {{year}} Guardrail Service. All rights reserved. | 
+      Documentation built with <a href="https://antora.org" target="_blank" rel="noopener">Antora</a>
+    </p>
+    <p class="build-info">
+      Last updated: {{buildDate}} | Version: {{page.version}}
+    </p>
+  </div>
+</footer>
+
+{{!-- Custom styles for footer --}}
+<style>
+  .footer {
+    background: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    margin-top: 3rem;
+    padding: 2rem 0 1rem;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+  
+  .footer-section h4 {
+    color: #333;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-section li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-section a {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  
+  .footer-section a:hover {
+    color: #007bff;
+  }
+  
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 1rem 1rem 0;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+  }
+  
+  .footer-bottom p {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin: 0.25rem 0;
+  }
+  
+  .footer-bottom a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .footer-bottom a:hover {
+    text-decoration: underline;
+  }
+  
+  .build-info {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-container {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+</style>
+
+{{!-- Add current year helper --}}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var yearElements = document.querySelectorAll('.copyright');
+    var currentYear = new Date().getFullYear();
+    yearElements.forEach(function(element) {
+      element.innerHTML = element.innerHTML.replace('{{year}}', currentYear);
+    });
+    
+    var buildDateElements = document.querySelectorAll('.build-info');
+    var buildDate = new Date().toLocaleDateString();
+    buildDateElements.forEach(function(element) {
+      element.innerHTML = element.innerHTML.replace('{{buildDate}}', buildDate);
+    });
+  });
+</script>

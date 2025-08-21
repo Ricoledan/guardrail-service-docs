@@ -1,0 +1,65 @@
+= Getting Started with Guardrail Service
+:description: Quick start guide for Guardrail Service
+:keywords: getting started, quickstart, installation
+
+This guide helps you get started with the Guardrail Service quickly.
+
+== Prerequisites
+
+Before you begin, ensure you have the following:
+
+* A supported operating system (Linux, macOS, or Windows)
+* Administrative privileges for installation
+* Network connectivity for downloading components
+
+== Installation
+
+=== Quick Installation
+
+The fastest way to get started is using our automated installer:
+
+[source,bash]
+----
+curl -sSL https://install.guardrail.example.com | bash
+----
+
+=== Manual Installation
+
+For manual installation or custom configurations:
+
+. Download the latest release from the releases page
+. Extract the archive to your preferred location
+. Configure the service according to your requirements
+. Start the service
+
+== First Steps
+
+Once installed, you can:
+
+. Access the web interface at `http://localhost:8080`
+. Configure your first guardrail policy
+. Test the service with sample requests
+
+== Configuration
+
+Basic configuration can be done through:
+
+* Configuration file: `/etc/guardrail/config.yaml`
+* Environment variables
+* Web interface settings
+
+== Verification
+
+To verify your installation:
+
+[source,bash]
+----
+guardrail version
+guardrail status
+----
+
+== Next Steps
+
+* xref:architecture.adoc[Learn about the architecture]
+* xref:user-guide:index.adoc[Explore the user guide]
+* xref:api:index.adoc[Review the API documentation]

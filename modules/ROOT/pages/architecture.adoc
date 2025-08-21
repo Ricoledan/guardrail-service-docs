@@ -1,0 +1,166 @@
+= Guardrail Service Architecture
+:description: Technical architecture overview of Guardrail Service
+:keywords: architecture, design, components, system
+
+This document provides a comprehensive overview of the Guardrail Service architecture.
+
+== Overview
+
+The Guardrail Service is designed as a modular, scalable system for policy enforcement and validation.
+
+== Core Components
+
+=== Policy Engine
+
+The policy engine is the heart of the Guardrail Service:
+
+* Evaluates incoming requests against defined policies
+* Supports multiple policy languages and formats
+* Provides real-time decision making
+
+=== API Gateway
+
+The API gateway handles:
+
+* Request routing
+* Authentication and authorization
+* Rate limiting and throttling
+* Request/response transformation
+
+=== Data Store
+
+The data store manages:
+
+* Policy definitions
+* Audit logs
+* Configuration data
+* Metrics and analytics
+
+== System Architecture
+
+[plantuml, guardrail-architecture, svg]
+----
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User", "Service consumer")
+System_Boundary(guardrail, "Guardrail Service") {
+    Container(api, "API Gateway", "REST API", "Handles incoming requests")
+    Container(engine, "Policy Engine", "Core Logic", "Evaluates policies")
+    Container(store, "Data Store", "Database", "Stores policies and logs")
+    Container(cache, "Cache", "Redis", "Caches decisions")
+}
+
+Rel(user, api, "Uses", "HTTPS")
+Rel(api, engine, "Forwards to")
+Rel(engine, store, "Queries/Updates")
+Rel(engine, cache, "Caches results")
+@enduml
+----
+
+== Deployment Models
+
+=== Standalone Deployment
+
+Suitable for:
+
+* Small to medium workloads
+* Development and testing environments
+* Single-tenant deployments
+
+=== Distributed Deployment
+
+Recommended for:
+
+* High-availability requirements
+* Large-scale production environments
+* Multi-tenant scenarios
+
+== Integration Patterns
+
+=== Inline Mode
+
+The service acts as a proxy:
+
+* All traffic passes through Guardrail
+* Real-time policy enforcement
+* Full request/response inspection
+
+=== Sidecar Mode
+
+Deployed alongside applications:
+
+* Low-latency policy decisions
+* Application-specific policies
+* Reduced network overhead
+
+=== API Mode
+
+Called as an external service:
+
+* Loose coupling with applications
+* Centralized policy management
+* Language-agnostic integration
+
+== Security Architecture
+
+=== Authentication
+
+* OAuth 2.0 / OpenID Connect
+* API key authentication
+* Mutual TLS (mTLS)
+
+=== Authorization
+
+* Role-Based Access Control (RBAC)
+* Attribute-Based Access Control (ABAC)
+* Policy-based authorization
+
+=== Data Protection
+
+* Encryption at rest
+* Encryption in transit
+* Audit logging
+* Compliance with standards (SOC2, GDPR, etc.)
+
+== Performance Considerations
+
+=== Caching Strategy
+
+* Decision caching for repeated requests
+* Policy caching for faster evaluation
+* Distributed cache for scalability
+
+=== Optimization Techniques
+
+* Policy compilation and optimization
+* Parallel evaluation for complex policies
+* Connection pooling and reuse
+
+== Monitoring and Observability
+
+=== Metrics
+
+* Request rate and latency
+* Policy evaluation time
+* Cache hit/miss rates
+* Error rates and types
+
+=== Logging
+
+* Structured logging
+* Audit trails
+* Debug and trace logging
+* Log aggregation support
+
+=== Tracing
+
+* Distributed tracing support
+* OpenTelemetry integration
+* Request flow visualization
+
+== Next Steps
+
+* xref:admin:index.adoc[Administration Guide]
+* xref:api:index.adoc[API Reference]
+* xref:developer:index.adoc[Developer Documentation]

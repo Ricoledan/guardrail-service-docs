@@ -1,0 +1,17 @@
+name: guardrail-service
+title: Guardrail Service
+version: ~
+display_version: Latest
+start_page: ROOT:index.adoc
+nav:
+- modules/ROOT/nav.adoc
+- modules/user-guide/nav.adoc
+- modules/api/nav.adoc
+- modules/admin/nav.adoc
+- modules/developer/nav.adoc
+asciidoc:
+  attributes:
+    product-name: Guardrail Service
+    product-version: 2.0
+    company-name: YourOrg
+    page-toclevels: 3
